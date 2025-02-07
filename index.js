@@ -1,8 +1,10 @@
 import express from 'express'
 import { igdl,ttdl,fbdown,twitter } from 'btch-downloader'
+import cors from 'cors'
 const app = express()
 app.use(express.json())
 app.use(express.urlencoded())
+app.use(cors())
 
 app.get('/',(req,res)=>{
     res.send("Hello from the server.")
