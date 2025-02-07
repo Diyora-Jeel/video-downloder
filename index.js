@@ -1,9 +1,6 @@
 import express from 'express'
 import { igdl,ttdl,fbdown,twitter } from 'btch-downloader'
-import dotenv from 'dotenv'
 const app = express()
-
-dotenv.config();
 app.use(express.json())
 app.use(express.urlencoded())
 
@@ -51,4 +48,4 @@ app.post('/twitter',async(req,res) => {
     }
 })
 
-app.listen(process.env.PORT)
+app.listen(8000)
