@@ -5,7 +5,7 @@ app.use(express.json())
 app.use(express.urlencoded())
 
 app.get('/',(req,res)=>{
-    res.send("Hello from the server")
+    res.send("Hello from the server.")
 })
 
 app.post('/instagram',async(req,res) => {
