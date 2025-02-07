@@ -48,6 +48,6 @@ app.post('/twitter',async(req,res) => {
     }
 })
 
-app.listen(8000)
-
-module.exports = app
+app.listen(8000,()=>{
+    console.log(`server is running`)
+})
