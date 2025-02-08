@@ -1,8 +1,6 @@
 import express from 'express';
 import cors from 'cors';
 import instagramGetUrl from 'instagram-url-direct';
-// import pkg from '@mrnima/facebook-downloader';
-// const { facebook , downloadTiktok } = pkg;
 import gifted from 'gifted-dls'
 
 // Initialize Express app
@@ -10,7 +8,7 @@ const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded());
 app.use(cors());
 
 // Constants
