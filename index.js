@@ -24,7 +24,7 @@ app.get('/', (req, res) => {
 
 // Instagram URL Processing Route
 app.post('/instagram', async (req, res) => {
-    const { url } = req.body;
+    const {url}  = req.body;
     
     if (!url) {
         return res.status(BAD_REQUEST_STATUS).json({error: 'URL is required' });
