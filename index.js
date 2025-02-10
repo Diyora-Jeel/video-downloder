@@ -1,14 +1,14 @@
 import express from 'express';
 import cors from 'cors';
 import instagramGetUrl from 'instagram-url-direct';
-import gifted from 'gifted-dls'
+import * as gifted from 'gifted-dls';
 
 // Initialize Express app
 const app = express();
 
 // Middleware
 app.use(express.json());
-app.use(express.urlencoded());
+app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 // Constants
@@ -24,18 +24,18 @@ app.get('/', (req, res) => {
 
 // Instagram URL Processing Route
 app.post('/instagram', async (req, res) => {
-    const {url}  = req.body;
+    const { url } = req.body;
     
     if (!url) {
-        return res.status(BAD_REQUEST_STATUS).json({error: 'URL is required' });
+        return res.status(BAD_REQUEST_STATUS).json({ error: 'URL is required' });
     }
     
     try {
         const data = await instagramGetUrl(url);
-        res.status(SUCCESS_STATUS).json({data});
+        res.status(SUCCESS_STATUS).json({ data: data || [] });
     } catch (error) {
-        console.error('Error fetching Instagram URL:', error);
-        res.status(ERROR_STATUS).json({error: 'Failed to process the Instagram URL' });
+        console.error('Error fetching Instagram URL:', error.message, error.stack);
+        res.status(ERROR_STATUS).json({ error: 'Failed to process the Instagram URL' });
     }
 });
 
@@ -44,15 +44,15 @@ app.post('/facebook', async (req, res) => {
     const { url } = req.body;
     
     if (!url) {
-        return res.status(BAD_REQUEST_STATUS).json({error: 'URL is required' });
+        return res.status(BAD_REQUEST_STATUS).json({ error: 'URL is required' });
     }
     
     try {
-        let data = await gifted.giftedfbdl(url)
+        let data = await gifted.default.giftedfbdl(url);
         res.status(SUCCESS_STATUS).json({ data });
     } catch (error) {
-        console.error('Error fetching Facebook URL:', error);
-        res.status(ERROR_STATUS).json({error: 'Failed to process the Facebook URL' });
+        console.error('Error fetching Facebook URL:', error.message, error.stack);
+        res.status(ERROR_STATUS).json({ error: 'Failed to process the Facebook URL' });
     }
 });
 
@@ -61,18 +61,17 @@ app.post('/tiktok', async (req, res) => {
     const { url } = req.body;
     
     if (!url) {
-        return res.status(BAD_REQUEST_STATUS).json({error: 'URL is required' });
+        return res.status(BAD_REQUEST_STATUS).json({ error: 'URL is required' });
     }
     
     try {
-        let data = await gifted.giftedtiktok(url)
+        let data = await gifted.default.giftedtiktok(url);
         res.status(SUCCESS_STATUS).json({ data });
     } catch (error) {
-        console.error('Error fetching Tiktok URL:', error);
-        res.status(ERROR_STATUS).json({ error: 'Failed to process the Tiktok URL' });
+        console.error('Error fetching TikTok URL:', error.message, error.stack);
+        res.status(ERROR_STATUS).json({ error: 'Failed to process the TikTok URL' });
     }
 });
-
 
 // Start Server
 app.listen(PORT, () => {
